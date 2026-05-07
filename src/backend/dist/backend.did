@@ -1,0 +1,112 @@
+type Timestamp = int;
+type ScoreBreakdown = 
+ record {
+   anomalyCount: nat;
+   correctCount: nat;
+   emptyCount: nat;
+   incorrectCount: nat;
+   maxPossibleScore: float64;
+   percentage: float64;
+   questionResults: vec QuestionResult;
+   totalScore: float64;
+ };
+type ScanResultId = nat;
+type ScanResult = 
+ record {
+   answerKeyId: AnswerKeyId;
+   id: ScanResultId;
+   percentage: float64;
+   questionResults: vec QuestionResult;
+   studentClass: text;
+   studentId: text;
+   studentName: text;
+   timestamp: Timestamp;
+   totalScore: float64;
+ };
+type ScanInput = 
+ record {
+   answerKeyId: AnswerKeyId;
+   detectedAnswers: vec variant {
+                          A;
+                          B;
+                          C;
+                          D;
+                          E;
+                          None;
+                        };
+   studentClass: text;
+   studentId: text;
+   studentName: text;
+ };
+type QuestionResult = 
+ record {
+   detectedAnswer: variant {
+                     A;
+                     B;
+                     C;
+                     D;
+                     E;
+                     None;
+                   };
+   pointsAwarded: float64;
+   questionNumber: nat;
+   status: AnswerStatus;
+ };
+type QuestionKey = 
+ record {
+   correctAnswer: AnswerChoice;
+   pointValue: float64;
+   questionNumber: nat;
+ };
+type AnswerStatus = 
+ variant {
+   anomaly;
+   correct;
+   "empty";
+   incorrect;
+ };
+type AnswerKeyInput = 
+ record {
+   name: text;
+   penaltyPerWrong: float64;
+   questionCount: nat;
+   questions: vec QuestionKey;
+ };
+type AnswerKeyId = nat;
+type AnswerKey = 
+ record {
+   id: AnswerKeyId;
+   name: text;
+   penaltyPerWrong: float64;
+   questionCount: nat;
+   questions: vec QuestionKey;
+ };
+type AnswerChoice = 
+ variant {
+   A;
+   B;
+   C;
+   D;
+   E;
+   None;
+ };
+service : {
+  createAnswerKey: (input: AnswerKeyInput) -> (AnswerKey);
+  deleteAnswerKey: (id: AnswerKeyId) -> (bool);
+  deleteScanResult: (id: ScanResultId) -> (bool);
+  getAnswerKey: (id: AnswerKeyId) -> (opt AnswerKey) query;
+  getScanResult: (id: ScanResultId) -> (opt ScanResult) query;
+  gradeAnswers: (answerKeyId: AnswerKeyId, detectedAnswers:
+   vec variant {
+         A;
+         B;
+         C;
+         D;
+         E;
+         None;
+       }) -> (opt ScoreBreakdown) query;
+  listAnswerKeys: () -> (vec AnswerKey) query;
+  listScanResults: () -> (vec ScanResult) query;
+  submitScan: (input: ScanInput) -> (ScanResult);
+  updateAnswerKey: (id: AnswerKeyId, input: AnswerKeyInput) -> (bool);
+}

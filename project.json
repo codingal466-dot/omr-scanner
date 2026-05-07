@@ -1,0 +1,23 @@
+{
+  "overview": "An OMR (Optical Mark Recognition) scanner app that lets educators capture bubble sheet answer forms with their device camera, automatically detect and grade filled bubbles against an answer key, and export results as CSV or PDF reports.",
+  "features": [
+    "Camera capture of bubble sheet answer forms",
+    "Auto-detect corner markers to align and straighten scanned sheets",
+    "Create and manage answer keys with question counts, point values, and penalty scoring",
+    "Bubble detection and grading against answer key with confidence flags",
+    "Annotated results view showing correct, incorrect, and empty bubbles",
+    "Export individual results as PDF or batch export as CSV"
+  ],
+  "category": "tool",
+  "tags": [
+    "omr",
+    "scanner",
+    "education",
+    "grading",
+    "bubble-sheet",
+    "assessment",
+    "camera",
+    "export"
+  ],
+  "last_updated": "2026-05-07T09:16:21.321Z"
+}

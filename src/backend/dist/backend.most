@@ -1,0 +1,57 @@
+// Version: 1.0.0
+type AnswerChoice__142703247 = {#A; #B; #C; #D; #E; #None};
+type AnswerKeyId__485511791 = Nat;
+type AnswerKey__184194924 =
+  {
+    id : AnswerKeyId__485511791;
+    name : Text;
+    penaltyPerWrong : Float;
+    questionCount : Nat;
+    questions : [QuestionKey__729441671]
+  };
+type AnswerStatus__428359038 = {#anomaly; #correct; #empty; #incorrect};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type QuestionKey__729441671 =
+  {
+    correctAnswer : AnswerChoice__142703247;
+    pointValue : Float;
+    questionNumber : Nat
+  };
+type QuestionResult__627634887 =
+  {
+    detectedAnswer : {#A; #B; #C; #D; #E; #None};
+    pointsAwarded : Float;
+    questionNumber : Nat;
+    status : AnswerStatus__428359038
+  };
+type ScanResultId__445061549 = Nat;
+type ScanResult__251260894 =
+  {
+    answerKeyId : AnswerKeyId__485511791;
+    id : ScanResultId__445061549;
+    percentage : Float;
+    questionResults : [QuestionResult__627634887];
+    studentClass : Text;
+    studentId : Text;
+    studentName : Text;
+    timestamp : Timestamp__301639476;
+    totalScore : Float
+  };
+type Timestamp__301639476 = Int;
+actor {
+  stable answerKeys :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AnswerKey__184194924]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextKeyId : Nat;
+  stable var nextScanId : Nat;
+  stable scanResults :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ScanResult__251260894]];
+      var elementIndex : Nat__490723111
+    }
+};
